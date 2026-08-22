@@ -3,6 +3,7 @@ package com.example.freya.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.freya.entities.Cover;
@@ -10,7 +11,7 @@ import com.example.freya.repositories.CoverRepository;
 
 @Service
 public class CoverService {
-
+	@Autowired
     CoverRepository coverRepository;
 
     public Cover getCoverById(Integer coverId) {
@@ -26,7 +27,7 @@ public class CoverService {
     	return coverRepository.findAll();
     }
 
-	public Cover crear(Cover cover) {
+	public Cover create(Cover cover) {
 		
 		return coverRepository.save(cover);
 	}

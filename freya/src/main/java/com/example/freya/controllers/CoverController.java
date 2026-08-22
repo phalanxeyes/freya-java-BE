@@ -2,6 +2,7 @@ package com.example.freya.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,8 @@ import com.example.freya.services.CoverService;
 @RequestMapping("/api/covers")
 public class CoverController {
 
-	private final CoverService coverService = new CoverService();
+	@Autowired
+	private CoverService coverService;
 	
     @GetMapping("/{coverId}")
     public Cover getCoverById(@PathVariable("coverId") Integer coverId) {
