@@ -22,6 +22,8 @@ public class StartLogsConsoleLogger {
         log.info("<=========================================================>");
         log.info(ANSI_GREEN + "SWAGGER DOCS:" + ANSI_RESET);
         log.info("http://localhost:{}/swagger-ui/index.html", puerto);
+        log.info(ANSI_GREEN + "GITHUB REPO (INFO):" + ANSI_RESET);
+        log.info("https://github.com/phalanxeyes/freya-java");
         log.info("<=========================================================>");
     }
 }
