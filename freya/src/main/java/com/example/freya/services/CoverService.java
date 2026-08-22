@@ -31,4 +31,13 @@ public class CoverService {
 		
 		return coverRepository.save(cover);
 	}
+	
+	public boolean delete(Integer coverId){
+		if (coverRepository.existsById(coverId)) {
+            coverRepository.deleteById(coverId);
+            return true;
+        } else {
+            throw new NullPointerException();
+        }
+	}
 }

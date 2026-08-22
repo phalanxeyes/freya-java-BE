@@ -3,6 +3,7 @@ package com.example.freya.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,11 @@ public class CoverController {
     
     @PostMapping
     public Cover create(@RequestBody Cover cover) {
-        return coverService.crear(cover);
+        return coverService.create(cover);
+    }
+    
+    @DeleteMapping("/{coverId}")
+    public boolean delete(@PathVariable Integer coverId){
+    	return coverService.delete(coverId);
     }
 }
