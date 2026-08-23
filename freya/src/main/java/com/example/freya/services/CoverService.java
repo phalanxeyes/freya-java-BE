@@ -3,6 +3,7 @@ package com.example.freya.services;
 
 import java.util.List;
 
+import com.example.freya.exceptions.IDNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class CoverService {
             throw new IllegalArgumentException("Invalid cover ID");
         }
         
-        return coverRepository.findById(coverId).orElseThrow(null);
+        return coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId));
     }
     
     public List<Cover> getAll(){
@@ -30,7 +31,9 @@ public class CoverService {
     }
 
 	public Cover create(Cover cover) {
-		
+		if (cover.getId() != null) {
+			throw new IllegalArgumentException("Can't create a cover with preexisting ID.");
+		}
 		return coverRepository.save(cover);
 	}
 	

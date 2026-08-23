@@ -19,4 +19,5 @@ public class UserController {
     public User getUserById(@PathVariable("userId") Integer userId) {
         return userService.getById(userId);
     }
+    
 }

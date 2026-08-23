@@ -31,9 +31,11 @@ public class CoverController {
     public List<Cover> getAll(){
     	return coverService.getAll();
     }
-    
+
+
     @PostMapping
     public Cover create(@RequestBody Cover cover) {
+        System.out.println(String.valueOf(cover.getClass()));
         return coverService.create(cover);
     }
     
