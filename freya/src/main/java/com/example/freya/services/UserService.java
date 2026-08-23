@@ -1,7 +1,12 @@
 package com.example.freya.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.freya.dtos.user.CreateUserDTO;
+import com.example.freya.dtos.user.UserDTO;
+import com.example.freya.exceptions.IDNotFoundException;
+import com.example.freya.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,23 +19,35 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
+    @Autowired
+    private UserMapper userMapper;
 	
-	public User getById(Integer userId) {
+	public UserDTO getById(Integer userId) {
         
         if (userId == null) {
             throw new IllegalArgumentException("Invalid cover ID");
         }
         
-        return userRepo.findById(userId).orElseThrow(null);
+        return userMapper.userToUserDTO(
+                userRepo.findById(userId)
+                        .orElseThrow(() -> new IDNotFoundException(User.class, userId))
+        );
     }
     
-    public List<User> getAll(){
-    	return userRepo.findAll();
+    public List<UserDTO> getAll(){
+
+        return userRepo.findAll().stream()
+                .map(userMapper::userToUserDTO)
+                .toList();
     }
 
-	public User create(User user) {
-		
-		return userRepo.save(user);
+	public UserDTO create(CreateUserDTO createDTO) {
+        User user = userMapper.createUserDTOToUser(createDTO);
+        user.setFechaCreacion(LocalDateTime.now());
+        // TODO : HASH PWD
+		return userMapper.userToUserDTO(
+                userRepo.save(user)
+        );
 	}
 	
 	public boolean delete(Integer userId){
