@@ -2,6 +2,7 @@ package com.example.freya.controllers;
 
 import java.util.List;
 
+import com.example.freya.dtos.cover.CoverDTO;
 import com.example.freya.dtos.cover.CreateCoverDTO;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,18 +32,18 @@ public class CoverController {
     }
     
     @GetMapping
-    public List<Cover> getAll(){
+    public List<CoverDTO> getAll(){
     	return coverService.getAll();
     }
 
 
     @PostMapping
-    public Cover create(@RequestBody CreateCoverDTO createCoverDTO) {
+    public CoverDTO create(@RequestBody CreateCoverDTO createCoverDTO) {
         return coverService.create(createCoverDTO);
     }
     
     @PutMapping("/{coverId}")
-    public Cover update(@PathVariable("coverId") Integer coverId, @RequestBody Cover coverDetails){
+    public CoverDTO update(@PathVariable("coverId") Integer coverId, @RequestBody Cover coverDetails){
     	return coverService.update(coverId, coverDetails);
     }
     

@@ -3,6 +3,7 @@ package com.example.freya.services;
 
 import java.util.List;
 
+import com.example.freya.dtos.cover.CoverDTO;
 import com.example.freya.dtos.cover.CreateCoverDTO;
 import com.example.freya.exceptions.IDNotFoundException;
 import com.example.freya.mapper.CoverMapper;
@@ -30,25 +31,29 @@ public class CoverService {
         return coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId));
     }
     
-    public List<Cover> getAll(){
-    	return coverRepository.findAll();
+    public List<CoverDTO> getAll(){
+		return coverRepository.findAll().stream()
+				.map(coverMapper::coverToCoverDTO)
+				.toList();
     }
 
-	public Cover create(CreateCoverDTO createDTO) {
-		return coverRepository.save(coverMapper.createCoverDTOtoCover(createDTO));
+	public CoverDTO create(CreateCoverDTO createDTO) {
+		return coverMapper.coverToCoverDTO(
+				coverRepository.save(coverMapper.createCoverDTOtoCover(createDTO))
+		);
 	}
 	
 	@Transactional
-	public Cover update(Integer id, Cover coverDetails) {
+	public CoverDTO update(Integer id, Cover coverDetails) {
 	    Cover existingCover = coverRepository.findById(id)
-	            .orElseThrow(() -> new NullPointerException());
+	            .orElseThrow(() -> new IDNotFoundException(Cover.class, id));
 
 	    existingCover.setDuracion(coverDetails.getDuracion());
 	    existingCover.setFechaHora(coverDetails.getFechaHora());
 
 	    // If you're wondering: no repository.save() is needed! 
 	    // Hibernate automatically updates the database when the transaction commits.
-	    return existingCover; 
+	    return coverMapper.coverToCoverDTO(existingCover);
 	}
 
 	
