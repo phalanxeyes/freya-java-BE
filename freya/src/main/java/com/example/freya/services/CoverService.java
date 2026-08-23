@@ -3,7 +3,9 @@ package com.example.freya.services;
 
 import java.util.List;
 
+import com.example.freya.dtos.cover.CreateCoverDTO;
 import com.example.freya.exceptions.IDNotFoundException;
+import com.example.freya.mapper.CoverMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import jakarta.transaction.Transactional;
 public class CoverService {
 	@Autowired
     CoverRepository coverRepository;
+	@Autowired
+    CoverMapper coverMapper;
 
     public Cover getCoverById(Integer coverId) {
         
@@ -30,11 +34,8 @@ public class CoverService {
     	return coverRepository.findAll();
     }
 
-	public Cover create(Cover cover) {
-		if (cover.getId() != null) {
-			throw new IllegalArgumentException("Can't create a cover with preexisting ID.");
-		}
-		return coverRepository.save(cover);
+	public Cover create(CreateCoverDTO createDTO) {
+		return coverRepository.save(coverMapper.createCoverDTOtoCover(createDTO));
 	}
 	
 	@Transactional
