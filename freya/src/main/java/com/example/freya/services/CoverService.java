@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.example.freya.entities.Cover;
 import com.example.freya.repositories.CoverRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CoverService {
 	@Autowired
@@ -31,6 +33,20 @@ public class CoverService {
 		
 		return coverRepository.save(cover);
 	}
+	
+	@Transactional
+	public Cover update(Integer id, Cover coverDetails) {
+	    Cover existingCover = coverRepository.findById(id)
+	            .orElseThrow(() -> new NullPointerException());
+
+	    existingCover.setDuracion(coverDetails.getDuracion());
+	    existingCover.setFechaHora(coverDetails.getFechaHora());
+
+	    // If you're wondering: no repository.save() is needed! 
+	    // Hibernate automatically updates the database when the transaction commits.
+	    return existingCover; 
+	}
+
 	
 	public boolean delete(Integer coverId){
 		if (coverRepository.existsById(coverId)) {
