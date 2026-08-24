@@ -4,12 +4,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name= "covers")
@@ -18,35 +13,60 @@ public class Cover {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer duracion;
+	private Integer duration;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	@Column(name = "fecha_hora")
-	private LocalDateTime fechaHora;
-	private Integer reproducciones;
-	
+	private LocalDateTime createdAt;
+	private Integer playCount;
+
+	@ManyToOne
+	@JoinColumn(name = "created_by_user_id")
+	private User createdBy;
+
+	@ManyToOne
+	@JoinColumn(name = "song_id")
+	private Song song;
+
+	public Song getSong() {
+		return song;
+	}
+
+	public void setSong(Song song) {
+		this.song = song;
+	}
+
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getDuracion() {
-		return duracion;
+	public Integer getDuration() {
+		return duration;
 	}
-	public void setDuracion(Integer duracion) {
-		this.duracion = duracion;
+	public void setDuration(Integer duracion) {
+		this.duration = duracion;
 	}
-	public LocalDateTime getFechaHora() {
-		return fechaHora;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
-	public void setFechaHora(LocalDateTime fechaHora) {
-		this.fechaHora = fechaHora;
+	public void setCreatedAt(LocalDateTime fechaHora) {
+		this.createdAt = fechaHora;
 	}
-	public Integer getReproducciones() {
-		return reproducciones;
+	public Integer getPlayCount() {
+		return playCount;
 	}
-	public void setReproducciones(Integer reproducciones) {
-		this.reproducciones = reproducciones;
+	public void setPlayCount(Integer reproducciones) {
+		this.playCount = reproducciones;
 	}
 }
 

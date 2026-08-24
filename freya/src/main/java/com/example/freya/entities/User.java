@@ -4,22 +4,20 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name= "users")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nombre;
+	private String username;
 	private String hashedPass;
 	private String email;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private LocalDateTime fechaCreacion;
+	private LocalDateTime createdAt;
 	
 	public Integer getId() {
 		return id;
@@ -27,11 +25,11 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getUsername() {
+		return username;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setUsername(String nombre) {
+		this.username = nombre;
 	}
 	public String getHashedPass() {
 		return hashedPass;
@@ -45,11 +43,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public LocalDateTime getFechaCreacion() {
-		return fechaCreacion;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
-	public void setFechaCreacion(LocalDateTime fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
+	public void setCreatedAt(LocalDateTime fechaCreacion) {
+		this.createdAt = fechaCreacion;
 	}
 	
 	

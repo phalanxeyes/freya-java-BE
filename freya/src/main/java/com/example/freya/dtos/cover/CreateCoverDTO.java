@@ -2,4 +2,4 @@ package com.example.freya.dtos.cover;
 
 import java.time.LocalDateTime;
 
-public record CreateCoverDTO(Integer duracion, LocalDateTime fechaHora, Integer reproducciones){}
+public record CreateCoverDTO(Integer duration, LocalDateTime createdAt, Integer playCount){}

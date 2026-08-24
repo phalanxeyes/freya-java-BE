@@ -48,8 +48,8 @@ public class CoverService {
 	    Cover existingCover = coverRepository.findById(id)
 	            .orElseThrow(() -> new IDNotFoundException(Cover.class, id));
 
-	    existingCover.setDuracion(coverDetails.getDuracion());
-	    existingCover.setFechaHora(coverDetails.getFechaHora());
+	    existingCover.setDuration(coverDetails.getDuration());
+	    existingCover.setCreatedAt(coverDetails.getCreatedAt());
 
 	    // If you're wondering: no repository.save() is needed! 
 	    // Hibernate automatically updates the database when the transaction commits.

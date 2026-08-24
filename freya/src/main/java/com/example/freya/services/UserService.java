@@ -10,7 +10,6 @@ import com.example.freya.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.freya.entities.Cover;
 import com.example.freya.entities.User;
 import com.example.freya.repositories.UserRepository;
 
@@ -43,7 +42,7 @@ public class UserService {
 
 	public UserDTO create(CreateUserDTO createDTO) {
         User user = userMapper.createUserDTOToUser(createDTO);
-        user.setFechaCreacion(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
         // TODO : HASH PWD
 		return userMapper.userToUserDTO(
                 userRepo.save(user)
