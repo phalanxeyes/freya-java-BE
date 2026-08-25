@@ -22,14 +22,16 @@ public class CoverService {
 	@Autowired
     CoverMapper coverMapper;
 
-    public Cover getCoverById(Integer coverId) {
+    public CoverDTO getCoverById(Integer coverId) {
         
         if (coverId == null) {
             throw new IllegalArgumentException("Invalid cover ID");
         }
         
-        return coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId));
-    }
+        return coverMapper.coverToCoverDTO(
+				coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId))
+    		);
+	}
     
     public List<CoverDTO> getAll(){
 		return coverRepository.findAll().stream()

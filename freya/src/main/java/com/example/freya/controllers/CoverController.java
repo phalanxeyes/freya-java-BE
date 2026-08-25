@@ -27,7 +27,7 @@ public class CoverController {
 	private CoverService coverService;
 	
     @GetMapping("/{coverId}")
-    public Cover getCoverById(@PathVariable("coverId") Integer coverId) {
+    public CoverDTO getCoverById(@PathVariable("coverId") Integer coverId) {
         return coverService.getCoverById(coverId);
     }
     
