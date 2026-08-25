@@ -16,7 +16,9 @@ public class Cover {
 	private Integer duration;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 	private Integer playCount;
+	private String youtubeUrl;
 
 	@ManyToOne
 	@JoinColumn(name = "created_by_user_id")
@@ -68,6 +70,22 @@ public class Cover {
 	public void setPlayCount(Integer reproducciones) {
 		this.playCount = reproducciones;
 	}
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
+    }
 }
 
 

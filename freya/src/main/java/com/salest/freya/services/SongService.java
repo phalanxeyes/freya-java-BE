@@ -25,10 +25,9 @@ public class SongService {
             throw new IllegalArgumentException("Invalid cover ID");
         }
 
-        return songMapper.songToSongDTO(
-                songRepo.findById(songId)
-                        .orElseThrow(() -> new IDNotFoundException(Song.class, songId))
-        );
+        Song song = songRepo.findById(songId).orElseThrow();
+        System.out.println("album = " + (song.getAlbum() != null ? song.getAlbum().getId() : null));
+        return songMapper.songToSongDTO(song);
     }
 
     public List<SongDTO> getAll(){

@@ -13,6 +13,17 @@ public class Song {
     private float duration;
     private String name;
     private String lyrics;
+    @ManyToOne
+    @JoinColumn(name = "album_id")
+    private Album album;
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
 
     public Integer getId() {
         return id;
@@ -45,4 +56,5 @@ public class Song {
     public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
     }
+
 }
