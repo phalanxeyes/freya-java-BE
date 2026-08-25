@@ -1,0 +1,1 @@
+.\mvnw process-classes "-Dfrontend.types.enabled=true"
