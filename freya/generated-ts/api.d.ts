@@ -1,6 +1,17 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2026-08-25 10:28:13.
+// Generated using typescript-generator version 3.2.1263 on 2026-08-26 21:00:52.
+
+export interface AlbumDTO {
+    id: number;
+    name: string;
+    artist: string;
+}
+
+export interface CreateAlbumDTO {
+    name: string;
+    artist: string;
+}
 
 export interface CoverDTO {
     id: number;
@@ -12,8 +23,9 @@ export interface CoverDTO {
 
 export interface CreateCoverDTO {
     duration: number;
-    createdAt: Date;
-    playCount: number;
+    songId: number;
+    uploaderUserId: number;
+    youtubeUrl: string;
 }
 
 export interface CreateSongDTO {
@@ -23,9 +35,11 @@ export interface CreateSongDTO {
 }
 
 export interface SongDTO {
+    id: number;
     duration: number;
     name: string;
     lyrics: string;
+    album: AlbumDTO;
 }
 
 export interface CreateUserDTO {
