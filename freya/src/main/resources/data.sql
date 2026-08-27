@@ -30,7 +30,7 @@ INSERT INTO songs (id, name, duration, lyrics, album_id) VALUES
                                                              (9, 'Instant Crush', 337.0, 'I chained alternative to loud. I picture look into the crowd. I met you once, I think I knew.', 7);
 
 -- 4. COVERS (Con la columna youtube_url integrada si tu entidad la tiene)
-INSERT INTO covers (id, duration, created_at, play_count, created_by_user_id, song_id, youtube_url) VALUES
+INSERT INTO covers (id, duration, created_at, play_count, uploader_user_id, song_id, youtube_url) VALUES
                                                                                                         (1, 200, '2024-01-15T10:00:00', 1520, 1, 1, NULL),
                                                                                                         (2, 175, '2024-02-10T16:20:00', 890, 2, 2, NULL),
                                                                                                         (3, 230, '2024-03-01T08:05:00', 4300, 1, 3, NULL),

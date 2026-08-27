@@ -21,8 +21,8 @@ public class Cover {
 	private String youtubeUrl;
 
 	@ManyToOne
-	@JoinColumn(name = "created_by_user_id")
-	private User createdBy;
+	@JoinColumn(name = "uploader_user_id")
+	private User uploader;
 
 	@ManyToOne
 	@JoinColumn(name = "song_id")
@@ -37,12 +37,12 @@ public class Cover {
 	}
 
 
-	public User getCreatedBy() {
-		return createdBy;
+	public User getUploader() {
+		return uploader;
 	}
 
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
+	public void setUploader(User createdBy) {
+		this.uploader = createdBy;
 	}
 
 
