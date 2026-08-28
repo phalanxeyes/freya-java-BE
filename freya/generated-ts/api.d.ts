@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2026-08-27 20:59:29.
+// Generated using typescript-generator version 3.2.1263 on 2026-08-28 11:53:00.
 
 export interface AlbumDTO {
     id: number;
@@ -27,6 +27,10 @@ export interface CreateCoverDTO {
     songId: number;
     uploaderUserId: number;
     youtubeUrl: string;
+}
+
+export interface HealthDTO {
+    health: string;
 }
 
 export interface CreateSongDTO {
