@@ -1,11 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2026-08-26 21:00:52.
+// Generated using typescript-generator version 3.2.1263 on 2026-08-27 20:59:29.
 
 export interface AlbumDTO {
     id: number;
     name: string;
     artist: string;
+    coverUrl: string;
 }
 
 export interface CreateAlbumDTO {

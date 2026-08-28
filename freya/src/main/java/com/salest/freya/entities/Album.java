@@ -10,6 +10,7 @@ public class Album {
     private Integer id;
     private String name;
     private String artist;
+    private String coverUrl;
 
     public Integer getId() {
         return id;
@@ -33,5 +34,13 @@ public class Album {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 }
