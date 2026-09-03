@@ -23,6 +23,9 @@ public class Song {
     private String name;
     private String lyrics;
     
+    @ManyToOne
+    @JoinColumn(name = "album_id")
+    private Album album;
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -32,25 +35,6 @@ public class Song {
     @Column(name = "updated_at", nullable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime updatedAt;
-    @ManyToOne
-    @JoinColumn(name = "album_id")
-    private Album album;
-
-    public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 
 	public Album getAlbum() {
         return album;

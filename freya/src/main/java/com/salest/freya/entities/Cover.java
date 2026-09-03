@@ -2,24 +2,26 @@ package com.salest.freya.entities;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name= "covers")
+@EntityListeners(AuditingEntityListener.class)
 public class Cover {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer duration;
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private LocalDateTime createdAt;
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private LocalDateTime updatedAt;
+	private Integer duration;	
 	private Integer playCount;
 	private String youtubeUrl;
+
 
 	@ManyToOne
 	@JoinColumn(name = "uploader_user_id")
@@ -29,6 +31,15 @@ public class Cover {
 	@JoinColumn(name = "song_id")
 	private Song song;
 
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private LocalDateTime createdAt;
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private LocalDateTime updatedAt;
+    
 	public Song getSong() {
 		return song;
 	}

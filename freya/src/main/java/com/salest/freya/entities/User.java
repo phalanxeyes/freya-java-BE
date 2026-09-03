@@ -2,12 +2,17 @@ package com.salest.freya.entities;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name= "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 	
 	@Id
@@ -16,9 +21,16 @@ public class User {
 	private String username;
 	private String hashedPass;
 	private String email;
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime createdAt;
-	
+    
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private LocalDateTime updatedAt;
+    
 	public Integer getId() {
 		return id;
 	}
