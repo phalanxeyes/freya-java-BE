@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.salest.freya.dtos.cover.CoverDTO;
 import com.salest.freya.dtos.cover.CreateCoverDTO;
+import com.salest.freya.dtos.cover.UpdateCoverDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +47,7 @@ public class CoverController {
     }
     
     @PutMapping("/{coverId}")
-    public CoverDTO update(@PathVariable("coverId") Integer coverId, @RequestBody Cover coverDetails){
+    public CoverDTO update(@PathVariable("coverId") Integer coverId, @RequestBody UpdateCoverDTO coverDetails){
     	return coverService.update(coverId, coverDetails);
     }
         

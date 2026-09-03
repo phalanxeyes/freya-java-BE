@@ -2,6 +2,7 @@ package com.salest.freya.mapper;
 
 import com.salest.freya.dtos.cover.CoverDTO;
 import com.salest.freya.dtos.cover.CreateCoverDTO;
+import com.salest.freya.dtos.cover.UpdateCoverDTO;
 import com.salest.freya.entities.Cover;
 import org.mapstruct.Mapper;
 
@@ -9,4 +10,5 @@ import org.mapstruct.Mapper;
 public interface CoverMapper {
     Cover createCoverDTOtoCover(CreateCoverDTO dto);
     CoverDTO coverToCoverDTO(Cover cover);
+    Cover updateCoverDTOtoCover(UpdateCoverDTO dto);
 }
