@@ -59,12 +59,8 @@ public class CoverService {
 	}
 
 	
-	public boolean delete(Integer coverId){
-		if (coverRepository.existsById(coverId)) {
-            coverRepository.deleteById(coverId);
-            return true;
-        } else {
-            throw new NullPointerException();
-        }
+	public void delete(Integer coverId){
+		coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId));
+		coverRepository.deleteById(coverId);
 	}
 }

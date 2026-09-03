@@ -5,6 +5,8 @@ import com.salest.freya.dtos.user.CreateUserDTO;
 import com.salest.freya.dtos.user.UserDTO;
 import com.salest.freya.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,10 +39,12 @@ public class UserController {
         return userService.update(userId, userDetails);
     }
      */
-
+    
     @DeleteMapping("/{userId}")
-    public boolean delete(@PathVariable Integer userId){
-        return userService.delete(userId);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> delete(@PathVariable Integer userId) {
+        userService.delete(userId);
+        return ResponseEntity.noContent().build();
     }
     
 }

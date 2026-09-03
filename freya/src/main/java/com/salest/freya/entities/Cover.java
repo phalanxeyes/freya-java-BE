@@ -16,6 +16,7 @@ public class Cover {
 	private Integer duration;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime updatedAt;
 	private Integer playCount;
 	private String youtubeUrl;

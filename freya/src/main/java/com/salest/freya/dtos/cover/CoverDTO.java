@@ -4,5 +4,5 @@ import com.salest.freya.dtos.song.SongDTO;
 
 import java.time.LocalDateTime;
 
-public record CoverDTO(Integer id, Integer duration, LocalDateTime createdAt, Integer playCount, SongDTO song) {
+public record CoverDTO(Integer id, Integer duration, LocalDateTime createdAt, LocalDateTime updatedAt, Integer playCount, SongDTO song) {
 }

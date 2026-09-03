@@ -1,9 +1,18 @@
 package com.salest.freya.entities;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "songs")
+@EntityListeners(AuditingEntityListener.class)
 public class Song {
 
     @Id
@@ -13,11 +22,37 @@ public class Song {
     private float duration;
     private String name;
     private String lyrics;
+    
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private LocalDateTime createdAt;
+    
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+	private LocalDateTime updatedAt;
     @ManyToOne
     @JoinColumn(name = "album_id")
     private Album album;
 
-    public Album getAlbum() {
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Album getAlbum() {
         return album;
     }
 

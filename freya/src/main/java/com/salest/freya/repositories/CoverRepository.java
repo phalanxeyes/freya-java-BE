@@ -6,4 +6,5 @@ import com.salest.freya.entities.Cover;
 
 public interface CoverRepository extends JpaRepository<Cover, Integer> {
 	
+	void deleteBySongId(Integer songId);
 }

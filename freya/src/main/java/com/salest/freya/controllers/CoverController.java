@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.salest.freya.entities.Cover;
 import com.salest.freya.services.CoverService;
@@ -36,6 +39,7 @@ public class CoverController {
 
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CoverDTO create(@RequestBody CreateCoverDTO createCoverDTO) {
         return coverService.create(createCoverDTO);
     }
@@ -44,9 +48,11 @@ public class CoverController {
     public CoverDTO update(@PathVariable("coverId") Integer coverId, @RequestBody Cover coverDetails){
     	return coverService.update(coverId, coverDetails);
     }
-    
+        
     @DeleteMapping("/{coverId}")
-    public boolean delete(@PathVariable Integer coverId){
-    	return coverService.delete(coverId);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> delete(@PathVariable Integer coverId) {
+        coverService.delete(coverId);
+        return ResponseEntity.noContent().build();
     }
 }
