@@ -56,8 +56,11 @@ public class CoverService {
 	            .orElseThrow(() -> new IDNotFoundException(Cover.class, id));
 
 	    if (coverDetails.songId() != null) {
-	    	Song songProxy = songRepository.getReferenceById(coverDetails.songId());
-	        existingCover.setSong(songProxy);
+	    	
+	    	Song song = songRepository.findById(coverDetails.songId())
+	                .orElseThrow(() -> new IDNotFoundException(Song.class, coverDetails.songId()));
+	    	
+	    	existingCover.setSong(song);
 	    }
 	    
 	    if (coverDetails.youtubeUrl() != null && !coverDetails.youtubeUrl().isBlank()) {
@@ -66,9 +69,8 @@ public class CoverService {
 	    if (coverDetails.duration() != null) {
 	    existingCover.setDuration(coverDetails.duration());}
 	    
+	    existingCover = coverRepository.saveAndFlush(existingCover);
 	    
-	    // If you're wondering: no repository.save() is needed! 
-	    // Hibernate automatically updates the database when the transaction commits.
 	    return coverMapper.coverToCoverDTO(existingCover);
 	}
 

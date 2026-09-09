@@ -1,6 +1,7 @@
 package com.salest.freya.controllers;
 
 import com.salest.freya.dtos.song.SongDTO;
+import com.salest.freya.dtos.song.UpdateSongDTO;
 import com.salest.freya.entities.Song;
 import com.salest.freya.dtos.song.CreateSongDTO;
 import com.salest.freya.services.SongService;
@@ -35,7 +36,7 @@ public class SongController {
 
     
     @PutMapping("/{songId}")
-    public SongDTO update(@PathVariable("songId") Integer songId, @RequestBody Song songDetails){
+    public SongDTO update(@PathVariable("songId") Integer songId, @RequestBody UpdateSongDTO songDetails){
         return songService.update(songId, songDetails);
     }
      

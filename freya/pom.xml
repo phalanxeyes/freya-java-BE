@@ -53,6 +53,24 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
+		
+		<dependency>
+	        <groupId>io.jsonwebtoken</groupId>
+	        <artifactId>jjwt-api</artifactId>
+	        <version>0.13.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>io.jsonwebtoken</groupId>
+	        <artifactId>jjwt-impl</artifactId>
+	        <version>0.13.0</version>
+	        <scope>runtime</scope>
+	    </dependency>
+	    <dependency>
+	        <groupId>io.jsonwebtoken</groupId>
+	        <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson, jjwt-orgjson -->
+	        <version>0.13.0</version>
+	        <scope>runtime</scope>
+	    </dependency>
 	</dependencies>
 
 	<build>
@@ -61,7 +79,25 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+    			<artifactId>build-helper-maven-plugin</artifactId>
+    			<version>3.5.0</version>
+			    <executions>
+			        <execution>
+            			<id>add-source</id>
+			            <phase>generate-sources</phase>
+			            <goals>
+            		    <goal>add-source</goal>
+            			</goals>
+			            <configuration>
+               				 <sources>
+                    			<source>${project.build.directory}/generated-sources/annotations</source>
+                			</sources>
+            			</configuration>
+        			</execution>
+			    </executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

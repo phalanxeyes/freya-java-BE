@@ -3,10 +3,13 @@ package com.salest.freya.services;
 import com.salest.freya.dtos.cover.CoverDTO;
 import com.salest.freya.dtos.song.CreateSongDTO;
 import com.salest.freya.dtos.song.SongDTO;
+import com.salest.freya.dtos.song.UpdateSongDTO;
+import com.salest.freya.entities.Album;
 import com.salest.freya.entities.Cover;
 import com.salest.freya.entities.Song;
 import com.salest.freya.exceptions.IDNotFoundException;
 import com.salest.freya.mapper.SongMapper;
+import com.salest.freya.repositories.AlbumRepository;
 import com.salest.freya.repositories.CoverRepository;
 import com.salest.freya.repositories.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,11 @@ import java.util.List;
 public class SongService {
 
     @Autowired
-    private SongRepository songRepo;
+    private SongRepository songRepository;
     @Autowired 
-    private CoverRepository coverRepo;
+    private CoverRepository coverRepository;
+    @Autowired
+    private AlbumRepository albumRepository;
     @Autowired
     private SongMapper songMapper;
 
@@ -31,14 +36,14 @@ public class SongService {
             throw new IllegalArgumentException("Invalid song ID");
         }
 
-        Song song = songRepo.findById(songId).orElseThrow();
+        Song song = songRepository.findById(songId).orElseThrow();
         System.out.println("album = " + (song.getAlbum() != null ? song.getAlbum().getId() : null));
         return songMapper.songToSongDTO(song);
     }
 
     public List<SongDTO> getAll(){
 
-        return songRepo.findAll().stream()
+        return songRepository.findAll().stream()
                 .map(songMapper::songToSongDTO)
                 .toList();
     }
@@ -46,35 +51,44 @@ public class SongService {
     public SongDTO create(CreateSongDTO createDTO) {
         Song song = songMapper.createSongDTOToSong(createDTO);
         return songMapper.songToSongDTO(
-                songRepo.save(song)
+                songRepository.save(song)
         );
     }
     
 	@Transactional
-	public SongDTO update(Integer id, Song songDetails) {
-	    Song existingSong = songRepo.findById(id)
+	public SongDTO update(Integer id, UpdateSongDTO songDetails) {
+	    Song existingSong = songRepository.findById(id)
 	            .orElseThrow(() -> new IDNotFoundException(Cover.class, id));
 
-	    existingSong.setDuration(songDetails.getDuration());
-	    existingSong.setName(songDetails.getName());
-	    existingSong.setLyrics(songDetails.getLyrics());
+	    if (songDetails.albumId() != null) {
+	    	
+	    	Album album = albumRepository.findById(songDetails.albumId())
+	                .orElseThrow(() -> new IDNotFoundException(Album.class, songDetails.albumId()));
+	    	
+	    	existingSong.setAlbum(album);
+	    }
 	    
-	    // If you're wondering: no repository.save() is needed! 
-	    // Hibernate automatically updates the database when the transaction commits.
+	    
+	    existingSong.setDuration(songDetails.duration());
+	    existingSong.setName(songDetails.name());
+	    existingSong.setLyrics(songDetails.lyrics());
+
+	    existingSong = songRepository.saveAndFlush(existingSong);
+	    
 	    return songMapper.songToSongDTO(existingSong);
 	}
 
     
     @Transactional
 	public void delete(Integer songId){
-		songRepo.findById(songId).orElseThrow(() -> new IDNotFoundException(Song.class, songId));
+		songRepository.findById(songId).orElseThrow(() -> new IDNotFoundException(Song.class, songId));
 		
 	     // Delete all covers referencing this song first
 
-	    coverRepo.deleteBySongId(songId);
+	    coverRepository.deleteBySongId(songId);
 	    
 	    // Now the song can be safely deleted
 
-	    songRepo.deleteById(songId); 
+	    songRepository.deleteById(songId); 
 	}
 }
