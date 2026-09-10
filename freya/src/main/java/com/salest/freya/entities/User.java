@@ -31,6 +31,15 @@ public class User {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime updatedAt;
     
+    public User() {
+    }
+
+    public User(Integer id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.hashedPass= password;
+    }
+    
 	public Integer getId() {
 		return id;
 	}
