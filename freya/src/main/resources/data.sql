@@ -30,15 +30,15 @@ INSERT INTO songs (id, name, duration, lyrics, album_id, created_at, updated_at)
                                                              (9, 'Instant Crush', 337.0, 'I chained alternative to loud. I picture look into the crowd. I met you once, I think I knew.', 7, NOW(), NOW());
 
 -- 4. COVERS (Videos oficiales funcionales de YouTube)
-INSERT INTO covers (id, duration, play_count, uploader_user_id, song_id, youtube_url, created_at, updated_at) VALUES
-                                                                                                      (1, 200, 1520, 1, 1, NULL, NOW(), NOW()),
-                                                                                                      (2, 175, 890, 2, 2, NULL, NOW(), NOW()),
-                                                                                                      (3, 230, 4300, 1, 3, NULL, NOW(), NOW()),
-                                                                                                      (4, 190, 275, 3, 4, NULL, NOW(), NOW()),
-                                                                                                      (5, 220, 1010, 2, 5, NULL, NOW(), NOW()),
-                                                                                                      (6, 265, 5040, 4, 6, 'https://www.youtube.com/watch?v=1E6VVuNm39M', NOW(), NOW()),
-                                                                                                      (7, 300, 12300, 5, 7, 'https://www.youtube.com/watch?v=518XP8prwZo', NOW(), NOW()),
-                                                                                                      (8, 190, 850, 1, 8, 'https://www.youtube.com/watch?v=GKdl-GCsNJ0', NOW(), NOW()),
-                                                                                                      (9, 210, 340, 6, 9, 'https://www.youtube.com/watch?v=a5uQMwRMHcs', NOW(), NOW()),
-                                                                                                      (10, 340, 9800, 3, 1, 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ', NOW(), NOW()),
-                                                                                                      (11, 180, 150, 2, 3, 'https://www.youtube.com/watch?v=YkgkThbgXqy', NOW(), NOW());
+INSERT INTO covers (id, duration, play_count, uploader_user_id, song_id, youtube_url, created_at, updated_at, status) VALUES
+                                                                                                      (1, 200, 1520, 1, 1, NULL, NOW(), NOW(), "APPROVED"),
+                                                                                                      (2, 175, 890, 2, 2, NULL, NOW(), NOW(), "APPROVED"),
+                                                                                                      (3, 230, 4300, 1, 3, NULL, NOW(), NOW(), "APPROVED"),
+                                                                                                      (4, 190, 275, 3, 4, NULL, NOW(), NOW(), "APPROVED"),
+                                                                                                      (5, 220, 1010, 2, 5, NULL, NOW(), NOW(), "PENDING"),
+                                                                                                      (6, 265, 5040, 4, 6, 'https://www.youtube.com/watch?v=1E6VVuNm39M', NOW(), NOW(), "PENDING"),
+                                                                                                      (7, 300, 12300, 5, 7, 'https://www.youtube.com/watch?v=518XP8prwZo', NOW(), NOW(), "PENDING"),
+                                                                                                      (8, 190, 850, 1, 8, 'https://www.youtube.com/watch?v=GKdl-GCsNJ0', NOW(), NOW(), "PENDING"),
+                                                                                                      (9, 210, 340, 6, 9, 'https://www.youtube.com/watch?v=a5uQMwRMHcs', NOW(), NOW(), "REJECTED"),
+                                                                                                      (10, 340, 9800, 3, 1, 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ', NOW(), NOW(), "APPROVED"),
+                                                                                                      (11, 180, 150, 2, 3, 'https://www.youtube.com/watch?v=YkgkThbgXqy', NOW(), NOW(), "HIDDEN");

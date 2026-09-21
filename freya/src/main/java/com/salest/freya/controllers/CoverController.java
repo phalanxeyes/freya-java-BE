@@ -33,12 +33,17 @@ public class CoverController {
     public CoverDTO getCoverById(@PathVariable("coverId") Integer coverId) {
         return coverService.getCoverById(coverId);
     }
-    
+
+    // default -> solo los aprobados
     @GetMapping
-    public List<CoverDTO> getAll(){
-    	return coverService.getAll();
+    public List<CoverDTO> getAllApproved(){
+        return coverService.getAllApprovedStatus();
     }
 
+    @GetMapping("/all")
+    public List<CoverDTO> getAll(){
+        return coverService.getAll();
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

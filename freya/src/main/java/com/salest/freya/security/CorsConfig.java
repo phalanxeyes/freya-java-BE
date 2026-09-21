@@ -1,4 +1,4 @@
-package com.salest.freya.controllers;
+package com.salest.freya.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,6 +2,7 @@ package com.salest.freya.entities;
 
 import java.time.LocalDateTime;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,7 +15,6 @@ import jakarta.persistence.*;
 @Table(name= "covers")
 @EntityListeners(AuditingEntityListener.class)
 public class Cover {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -39,7 +39,25 @@ public class Cover {
     @Column(name = "updated_at", nullable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private LocalDateTime updatedAt;
-    
+
+	public enum Status{
+		PENDING,
+		APPROVED,
+		REJECTED,
+		HIDDEN
+	}
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
 	public Song getSong() {
 		return song;
 	}

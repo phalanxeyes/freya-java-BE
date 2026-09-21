@@ -4,7 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.salest.freya.entities.Cover;
 
+import java.util.List;
+
 public interface CoverRepository extends JpaRepository<Cover, Integer> {
 	
 	void deleteBySongId(Integer songId);
+	List<Cover> findByStatus(Cover.Status status);
 }

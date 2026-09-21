@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 @Configuration
-public class WebSecurityConfig {
+public class  WebSecurityConfig {
     @Autowired
     CustomUserDetailsService userDetailsService;
     @Autowired
@@ -37,7 +37,6 @@ public class WebSecurityConfig {
         
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF
-                .cors(cors -> cors.disable()) // Disable CORS
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling.authenticationEntryPoint(unauthorizedHandler)
                 )
@@ -46,7 +45,22 @@ public class WebSecurityConfig {
                 )
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/auth/**", "/api/test/all").permitAll() 
+                                //basic
+                                .requestMatchers(
+                                        "/api/auth/**",
+                                        "/api/test/all",
+                                        "/api/health",
+                                        "/catpat",
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**"
+                                ).permitAll()
+                                //basic GET
+                                .requestMatchers(
+                                        org.springframework.http.HttpMethod.GET,
+                                        "/api/covers/**",
+                                        "/api/songs/**"
+                                ).permitAll()
                                 .anyRequest().authenticated()
                 );
        

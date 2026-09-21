@@ -79,4 +79,10 @@ public class CoverService {
 		coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId));
 		coverRepository.deleteById(coverId);
 	}
+
+	public List<CoverDTO> getAllApprovedStatus(){
+		return coverRepository.findByStatus(Cover.Status.APPROVED).stream()
+				.map(coverMapper::coverToCoverDTO)
+				.toList();
+	}
 }
