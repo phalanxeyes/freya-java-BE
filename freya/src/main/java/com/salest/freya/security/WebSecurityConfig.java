@@ -4,6 +4,7 @@ import com.salest.freya.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,22 +47,11 @@ public class  WebSecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 //basic
-                                .requestMatchers(
-                                        "/api/auth/**",
-                                        "/api/test/all",
-                                        "/api/health",
-                                        "/catpat",
-                                        "/swagger-ui.html",
-                                        "/swagger-ui/**",
-                                        "/v3/api-docs/**"
-                                ).permitAll()
-                                //basic GET
-                                .requestMatchers(
-                                        org.springframework.http.HttpMethod.GET,
-                                        "/api/covers/**",
-                                        "/api/songs/**"
-                                ).permitAll()
-                                .anyRequest().authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/songs/").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/songs/all").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/songs/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/songs/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/songs/**").hasRole("ADMIN")
                 );
        
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
