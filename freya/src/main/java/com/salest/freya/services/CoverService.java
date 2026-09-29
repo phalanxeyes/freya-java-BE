@@ -27,14 +27,16 @@ public class CoverService {
 	@Autowired
     CoverMapper coverMapper;
 
+	private Cover getCoverEntityById(Integer coverId){
+		if (coverId == null) {
+			throw new IllegalArgumentException("Invalid cover ID");
+		}
+		return coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId));
+	}
+
     public CoverDTO getCoverById(Integer coverId) {
-        
-        if (coverId == null) {
-            throw new IllegalArgumentException("Invalid cover ID");
-        }
-        
         return coverMapper.coverToCoverDTO(
-				coverRepository.findById(coverId).orElseThrow(() -> new IDNotFoundException(Cover.class, coverId))
+				getCoverEntityById(coverId)
     		);
 	}
     
@@ -84,5 +86,23 @@ public class CoverService {
 		return coverRepository.findByStatus(Cover.Status.APPROVED).stream()
 				.map(coverMapper::coverToCoverDTO)
 				.toList();
+	}
+
+	public List<CoverDTO> getAllPendingStatus(){
+		return coverRepository.findByStatus(Cover.Status.PENDING).stream()
+				.map(coverMapper::coverToCoverDTO)
+				.toList();
+	}
+
+	public CoverDTO approveCoverById(Integer coverId){
+		Cover cover = getCoverEntityById(coverId);
+		cover.setStatus(Cover.Status.APPROVED);
+		return coverMapper.coverToCoverDTO(coverRepository.save(cover));
+	}
+
+	public CoverDTO rejectCoverById(Integer coverId){
+		Cover cover = getCoverEntityById(coverId);
+		cover.setStatus(Cover.Status.REJECTED);
+		return coverMapper.coverToCoverDTO(coverRepository.save(cover));
 	}
 }
