@@ -1,5 +1,6 @@
 package com.salest.freya.controllers;
 
+import com.salest.freya.dtos.user.UserSignUpDTO;
 import com.salest.freya.entities.User;
 import com.salest.freya.repositories.UserRepository;
 import com.salest.freya.security.JwtUtil;
@@ -21,26 +22,26 @@ public class AuthController {
     @Autowired
     JwtUtil jwtUtils;
     @PostMapping("/signin")
-    public String authenticateUser(@RequestBody User user) {
+    public String authenticateUser(@RequestBody UserSignUpDTO userSignUpDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
-                        user.getHashedPass()
+                		userSignUpDTO.userName(),
+                		userSignUpDTO.password()
                 )
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return jwtUtils.generateToken(userDetails.getUsername());
     }
     @PostMapping("/signup")
-    public String registerUser(@RequestBody User user) {
-        if (userRepository.existsByUsername(user.getUsername())) {
+    public String registerUser(@RequestBody UserSignUpDTO userSignUpDTO) {
+        if (userRepository.existsByUsername(userSignUpDTO.userName())) {
             return "Error: Username is already taken!";
         }
         // Create new user's account
         User newUser = new User(
                 null,
-                user.getUsername(),
-                encoder.encode(user.getHashedPass())
+                userSignUpDTO.userName(),
+                encoder.encode(userSignUpDTO.password())
         );
         userRepository.save(newUser);
         return "User registered successfully!";

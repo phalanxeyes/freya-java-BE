@@ -19,7 +19,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String username;
-	private String hashedPass;
+	private String password;
 	private String email;
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -37,7 +37,7 @@ public class User {
     public User(Integer id, String username, String password) {
         this.id = id;
         this.username = username;
-        this.hashedPass= password;
+        this.password= password;
     }
     
 	public Integer getId() {
@@ -52,11 +52,11 @@ public class User {
 	public void setUsername(String nombre) {
 		this.username = nombre;
 	}
-	public String getHashedPass() {
-		return hashedPass;
+	public String getPassword() {
+		return password;
 	}
-	public void setHashedPass(String hashedPass) {
-		this.hashedPass = hashedPass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getEmail() {
 		return email;
