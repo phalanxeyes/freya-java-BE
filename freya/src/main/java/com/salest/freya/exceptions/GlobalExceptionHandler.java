@@ -18,6 +18,16 @@ public class GlobalExceptionHandler {
         return createProblem(HttpStatus.NOT_FOUND, ex.getMessage()) ;
     }
 
+    @ExceptionHandler(BusinessRuleException.class)
+    public ProblemDetail handleBusinessRule(BusinessRuleException ex) {
+        return createProblem(HttpStatus.BAD_REQUEST, ex.getMessage()) ;
+    }
+
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    private ProblemDetail handleEntityAlreadyExists(EntityAlreadyExistsException ex) {
+        return createProblem(HttpStatus.CONFLICT, ex.getMessage()) ;
+    }
+
     // problem detail with message property
     private ProblemDetail createProblem(HttpStatus status, String message) {
         ProblemDetail problem = ProblemDetail.forStatus(status);

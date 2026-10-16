@@ -1,5 +1,5 @@
 -- 1. USERS
-INSERT INTO users (id, username, hashed_pass, email, created_at, updated_at) VALUES
+INSERT INTO users (id, username, password, email, created_at, updated_at) VALUES
                                                                      (1, 'jdoe', '$2a$10$abcdefghijklmnopqrstuv', 'jdoe@example.com', NOW(), NOW()),
                                                                      (2, 'mgarcia', '$2a$10$1234567890abcdefghijk', 'mgarcia@example.com', NOW(), NOW()),
                                                                      (3, 'lrossi', '$2a$10$zzzzyyyyxxxxwwwwvvvvuu', 'lrossi@example.com', NOW(), NOW()),

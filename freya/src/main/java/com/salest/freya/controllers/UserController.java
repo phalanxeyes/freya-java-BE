@@ -27,13 +27,13 @@ public class UserController {
         return userService.getAll();
     }
 
-
+    /*
     @PostMapping
     public UserDTO create(@RequestBody CreateUserDTO createUserDTO) {
         return userService.create(createUserDTO);
     }
 
-    /*
+
     @PutMapping("/{userId}")
     public UserDTO update(@PathVariable("userId") Integer userId, @RequestBody user userDetails){
         return userService.update(userId, userDetails);

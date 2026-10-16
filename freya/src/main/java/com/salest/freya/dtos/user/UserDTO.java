@@ -2,5 +2,5 @@ package com.salest.freya.dtos.user;
 
 import java.time.LocalDateTime;
 
-public record UserDTO(Integer id, String userName, LocalDateTime createdAt) {
+public record UserDTO(Integer id, String username, LocalDateTime createdAt) {
 }

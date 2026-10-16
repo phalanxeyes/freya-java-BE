@@ -70,6 +70,13 @@ public class User {
 	public void setCreatedAt(LocalDateTime fechaCreacion) {
 		this.createdAt = fechaCreacion;
 	}
-	
-	
+
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
