@@ -1,0 +1,14 @@
+rules:
+  user:
+    - field: username
+      type: text
+      required: true
+      params: { min: 6, max: 12 }
+    - field: password
+      type: text
+      required: true
+      params: { min: 6, max: 20 }
+    #- field: email
+    #  type: text
+    #  required: true
+    #  pattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'

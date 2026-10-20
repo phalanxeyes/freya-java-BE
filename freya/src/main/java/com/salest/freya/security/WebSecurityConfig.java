@@ -70,6 +70,7 @@ public class  WebSecurityConfig {
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 // Auth: público, si no nadie puede hacer login/registro
                                 .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/configs/**").permitAll()
                                 // Salud / demo públicos
                                 .requestMatchers(HttpMethod.GET, "/api/health", "/api/health/**", "/catpat", "/api/test/all").permitAll()
                                 .requestMatchers("/error").permitAll()
