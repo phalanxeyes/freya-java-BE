@@ -3,13 +3,18 @@ package com.salest.freya.services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.salest.freya.dtos.config.UserPasswordValidationsDTO;
+import com.salest.freya.dtos.config.UserUsernameValidationsDTO;
 import com.salest.freya.dtos.user.CreateUserDTO;
 import com.salest.freya.dtos.user.UserDTO;
+import com.salest.freya.dtos.user.UserSignInDTO;
 import com.salest.freya.dtos.user.UserSignUpDTO;
 import com.salest.freya.exceptions.BusinessRuleException;
 import com.salest.freya.exceptions.EntityAlreadyExistsException;
 import com.salest.freya.exceptions.IDNotFoundException;
+import com.salest.freya.exceptions.InvalidCredentialsException;
 import com.salest.freya.mapper.UserMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,8 @@ public class UserService {
 	private UserRepository userRepo;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ValidationsService validationsService;
     @Autowired
     PasswordEncoder encoder;
 	
@@ -50,9 +57,10 @@ public class UserService {
         if (userRepo.existsByUsername(signUpDTO.username())){
             throw new EntityAlreadyExistsException(User.class, signUpDTO.username());
         }
-        if(!isValidPwd(signUpDTO.password())){
-            throw new BusinessRuleException("Password does not meet the required criteria.");
-        }
+        // throw if invalid
+        validatePwd(signUpDTO.password());
+        validateUsername(signUpDTO.username());
+        //
         User user = new User();
         user.setUsername(signUpDTO.username());
         user.setPassword(encoder.encode(signUpDTO.password()));
@@ -64,15 +72,51 @@ public class UserService {
         );
 	}
 
-    private boolean isValidPwd(String pwd){
-        return pwd != null && pwd.length() > 6;
+    public UserDTO signIn(UserSignInDTO signInDTO){
+        User user = userRepo.findByUsername(signInDTO.username());
+        if(user == null){
+            throw new InvalidCredentialsException("Invalid username or password"); // CWE-204 : https://cwe.mitre.org/data/definitions/204.html
+            // NACHO : en el sign up es bastante imposible de atajar, pero acá lo mejor es dar un mensaje lo más ambiguo posible
+        }
+        boolean isPasswordCorrect = encoder.matches(signInDTO.password(), user.getPassword());
+        if(!isPasswordCorrect){
+            throw new InvalidCredentialsException("Invalid username or password");
+        }
+        return userMapper.userToUserDTO(user);
     }
-	public boolean delete(Integer userId){
-		if (userRepo.existsById(userId)) {
+
+    public boolean delete(Integer userId){
+        if (userRepo.existsById(userId)) {
             userRepo.deleteById(userId);
             return true;
         } else {
             throw new NullPointerException();
         }
-	}
+    }
+
+    private void validatePwd(String pwd){
+        UserPasswordValidationsDTO pwdVal = validationsService.getPasswordValidations();
+        if(pwd == null || pwd.isEmpty()){
+            throw new BusinessRuleException("Password is empty");
+        }
+        if(pwd.length() < pwdVal.min()){
+            throw new BusinessRuleException("Password does not meet the required criteria: Password too short");
+        }
+        if(pwd.length() > pwdVal.max()){
+            throw new BusinessRuleException("Password does not meet the required criteria: Password too long");
+        }
+    }
+
+    private void validateUsername(String username) {
+        UserUsernameValidationsDTO userVal = validationsService.getUsernameValidations();
+        if(username == null || username.isEmpty()){
+            throw new BusinessRuleException("Username is empty");
+        }
+        if(username.length() > userVal.min()){
+            throw new BusinessRuleException("Username does not meet the required criteria: Username too long");
+        }
+        if(username.length() < userVal.min()){
+            throw new BusinessRuleException("Username does not meet the required criteria: Username too short");
+        }
+    }
 }

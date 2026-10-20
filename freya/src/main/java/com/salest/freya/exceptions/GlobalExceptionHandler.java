@@ -28,6 +28,11 @@ public class GlobalExceptionHandler {
         return createProblem(HttpStatus.CONFLICT, ex.getMessage()) ;
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    private ProblemDetail handleInvalidCredentials(InvalidCredentialsException ex) {
+        return createProblem(HttpStatus.UNAUTHORIZED, ex.getMessage()) ;
+    }
+
     // problem detail with message property
     private ProblemDetail createProblem(HttpStatus status, String message) {
         ProblemDetail problem = ProblemDetail.forStatus(status);
