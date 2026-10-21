@@ -1,10 +1,13 @@
 package com.salest.freya.controllers;
 
+import com.salest.freya.dtos.user.AuthUserDTO;
 import com.salest.freya.dtos.user.UserDTO;
+import com.salest.freya.dtos.user.UserSignInDTO;
 import com.salest.freya.dtos.user.UserSignUpDTO;
 import com.salest.freya.entities.User;
 import com.salest.freya.repositories.UserRepository;
 import com.salest.freya.security.JwtUtil;
+import com.salest.freya.services.AuthService;
 import com.salest.freya.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
@@ -20,20 +23,17 @@ public class AuthController {
     @Autowired
     UserService userService;
     @Autowired
-    JwtUtil jwtUtils;
+    AuthService authService;
+
     @PostMapping("/signin")
-    public String authenticateUser(@RequestBody UserSignUpDTO userSignUpDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                		userSignUpDTO.username(),
-                		userSignUpDTO.password()
-                )
-        );
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return jwtUtils.generateToken(userDetails.getUsername());
+    public AuthUserDTO authenticateUser(@RequestBody UserSignInDTO signInDTO) {
+        return authService.authUser(signInDTO);
     }
     @PostMapping("/signup")
-    public UserDTO registerUser(@RequestBody UserSignUpDTO userSignUpDTO) {
-        return userService.create(userSignUpDTO);
+    public AuthUserDTO registerUser(@RequestBody UserSignUpDTO signUpDTO) {
+        UserDTO _userDTO = userService.create(signUpDTO);
+        return authService.authUser(
+                new UserSignInDTO(signUpDTO.username(), signUpDTO.password())
+        );
     }
 }

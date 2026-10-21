@@ -72,19 +72,6 @@ public class UserService {
         );
 	}
 
-    public UserDTO signIn(UserSignInDTO signInDTO){
-        User user = userRepo.findByUsername(signInDTO.username());
-        if(user == null){
-            throw new InvalidCredentialsException("Invalid username or password"); // CWE-204 : https://cwe.mitre.org/data/definitions/204.html
-            // NACHO : en el sign up es bastante imposible de atajar, pero acá lo mejor es dar un mensaje lo más ambiguo posible
-        }
-        boolean isPasswordCorrect = encoder.matches(signInDTO.password(), user.getPassword());
-        if(!isPasswordCorrect){
-            throw new InvalidCredentialsException("Invalid username or password");
-        }
-        return userMapper.userToUserDTO(user);
-    }
-
     public boolean delete(Integer userId){
         if (userRepo.existsById(userId)) {
             userRepo.deleteById(userId);
